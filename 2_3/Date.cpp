@@ -118,3 +118,69 @@ bool Date::operator==(const Date& d)
 		&& _month == d._month
 		&& _day == d._day;
 }
+
+bool Date::operator != (const Date& d)
+{
+	return !(*this == d);
+}
+
+bool Date::operator>(const Date& d)
+{
+	if (_year > d._year)
+	{
+		return true;
+	}
+	else if (_year == d._year)
+	{
+		if (_month > d._month)
+		{
+			return true;
+		}
+		else if (_month == d._month)
+		{
+			if (_day > d._day)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+//我的方法
+bool Date::operator < (const Date& d)
+{
+	return !((*this > d) || (*this == d));
+}
+
+// >=运算符重载
+bool Date::operator >= (const Date& d)
+{
+	return !(*this < d);
+}
+// <=运算符重载
+bool Date::operator <= (const Date& d)
+{
+	return !(*this > d);
+}
+
+// d1 - d2
+int Date::operator-(const Date& d)
+{
+	Date max = *this, min = d;
+	int flag = 1;
+	if (*this < d)
+	{
+		max = d;
+		min = *this;
+		flag = -1;
+	}
+	int n = 0;
+	while (min != max)
+	{
+		++n;
+		++min;
+	}
+	return flag * n;
+}
